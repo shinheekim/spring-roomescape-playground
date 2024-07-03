@@ -1,10 +1,13 @@
 package roomescape.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import roomescape.dto.ReservationReqDto;
+import roomescape.exception.ErrorCode;
+import roomescape.exception.NotFoundReservationException;
 import roomescape.model.Reservation;
 
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class RoomescapeApiController {
     private List<Reservation> reservations = new ArrayList<>();
     private AtomicLong index = new AtomicLong(0);
+
+    // 조회 Test(임시 데이터 입력)
     public RoomescapeApiController(){
         reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-01","10:00"));
         reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-02","11:00"));
@@ -30,7 +35,7 @@ public class RoomescapeApiController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationReqDto reqDto) {
+    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody ReservationReqDto reqDto) {
         Reservation reservation = new Reservation(
                 index.incrementAndGet(),
                 reqDto.name(),
@@ -47,7 +52,7 @@ public class RoomescapeApiController {
         if (removed) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.BAD_REQUEST);
         }
     }
 }
