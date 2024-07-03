@@ -1,6 +1,7 @@
 package roomescape.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import roomescape.model.Reservation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Controller
 @RequestMapping("/reservations")
@@ -42,7 +45,10 @@ public class RoomescapeApiController {
                 reqDto.date(),
                 reqDto.time());
         reservations.add(reservation);
-        return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+        return ResponseEntity.status(CREATED)
+                .header(HttpHeaders.LOCATION, "/reservations/" + reservation.getId())
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .body(reservation);
     }
 
     @DeleteMapping("/{id}")
