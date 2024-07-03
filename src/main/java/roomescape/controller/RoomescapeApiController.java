@@ -13,6 +13,11 @@ import java.util.List;
 @Controller
 public class RoomescapeApiController {
     private List<Reservation> reservations = new ArrayList<>();
+    public RoomescapeApiController(){
+        reservations.add(new Reservation(1L,"브라운", "2023-01-01","10:00"));
+        reservations.add(new Reservation(2L,"브라운", "2023-01-02","11:00"));
+        reservations.add(new Reservation(3L,"브라운", "2023-01-03","12:00"));
+    }
 
     @GetMapping("/reservations")
     @ResponseBody
