@@ -2,6 +2,7 @@ package roomescape;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -16,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 public class MissionStepTest {
 
     @Test
+    @DisplayName("index.html 띄우는 테스트")
     void 일단계() {
         RestAssured.given().log().all()
                 .when().get("/")
@@ -23,6 +25,7 @@ public class MissionStepTest {
                 .statusCode(200);
     }
     @Test
+    @DisplayName("예약 전체 조회 테스트")
     void 이단계() {
         RestAssured.given().log().all()
                 .when().get("/reservation")
@@ -37,6 +40,7 @@ public class MissionStepTest {
     }
 
     @Test
+    @DisplayName("예약 생성/삭제 테스트")
     void 삼단계() {
         Map<String, String> params = new HashMap<>();
         params.put("name", "브라운");
@@ -71,6 +75,7 @@ public class MissionStepTest {
     }
 
     @Test
+    @DisplayName("예외 처리 테스트")
     void 사단계() {
         Map<String, String> params = new HashMap<>();
         params.put("name", "브라운");
