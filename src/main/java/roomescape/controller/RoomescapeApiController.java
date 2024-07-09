@@ -26,9 +26,6 @@ public class RoomescapeApiController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<Reservation>> reservations() {
-        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-01","10:00"));
-        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-02","11:00"));
-        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-03","12:00"));
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
@@ -54,6 +51,7 @@ public class RoomescapeApiController {
         if (removed) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 200 -> 204 No Content
         }
-        throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.BAD_REQUEST);    // else삭제
+        throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.NOT_FOUND);    // else삭제
+        // return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
     }
 }
