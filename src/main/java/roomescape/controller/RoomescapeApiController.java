@@ -23,16 +23,12 @@ public class RoomescapeApiController {
     private List<Reservation> reservations = new ArrayList<>();
     private AtomicLong index = new AtomicLong(0);
 
-    // 조회 Test(임시 데이터 입력)
-    public RoomescapeApiController(){
-        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-01","10:00"));
-        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-02","11:00"));
-        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-03","12:00"));
-    }
-
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<Reservation>> reservations() {
+        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-01","10:00"));
+        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-02","11:00"));
+        reservations.add(new Reservation(index.incrementAndGet(), "브라운", "2023-01-03","12:00"));
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
