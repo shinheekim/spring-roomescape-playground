@@ -52,9 +52,8 @@ public class RoomescapeApiController {
         boolean removed = reservations.removeIf(
                 reservation -> reservation.getId().equals(id));
         if (removed) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 200 -> 204 No Content
         }
+        throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.BAD_REQUEST);    // else삭제
     }
 }
