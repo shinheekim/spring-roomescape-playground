@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import roomescape.dto.ReservationListResDto;
 import roomescape.dto.ReservationReqDto;
-import roomescape.exception.ErrorCode;
-import roomescape.exception.NotFoundReservationException;
 import roomescape.domain.Reservation;
 import roomescape.service.ReservationService;
 
@@ -20,6 +18,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping("/reservations")
 public class RoomescapeApiController {
     private final ReservationService reservationService;
+
     public RoomescapeApiController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
@@ -41,13 +40,8 @@ public class RoomescapeApiController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
-        try {
-            reservationService.deleteReservation(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (NotFoundReservationException e) {
-            throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.NOT_FOUND);
-            // return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
-
-        }
+        reservationService.deleteReservation(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

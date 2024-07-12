@@ -19,11 +19,12 @@ public class ReservationService {
     public ReservationService(ReservationDao reservationDao) {
         this.reservationDao = reservationDao;
     }
+
     public List<ReservationListResDto> findAllReservations(){
         List<Reservation> reservations = reservationDao.findAll();
         return reservations.stream()
                 .map(ReservationListResDto::from)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public Reservation createReservation(ReservationReqDto reservationReqDto) {
@@ -36,9 +37,8 @@ public class ReservationService {
         Reservation reservation = reservationDao.findById(id);
         if (reservation != null) {
             reservationDao.delete(id);
-        } else {
-            throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
+        throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND);
     }
 
 }
