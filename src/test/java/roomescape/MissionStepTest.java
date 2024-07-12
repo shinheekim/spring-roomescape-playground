@@ -19,6 +19,11 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.is;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class MissionStepTest {
@@ -31,57 +36,6 @@ public class MissionStepTest {
                 .then().log().all()
                 .statusCode(200);
     }
-/*
-    @Test
-    @DisplayName("이단계: 예약 전체 조회 테스트")
-    void 이단계() {
-        RestAssured.given().log().all()
-                .when().get("/reservation")
-                .then().log().all()
-                .statusCode(200);
-
-        RestAssured.given().log().all()
-                .when().get("/reservations")
-                .then().log().all()
-                .statusCode(200)
-                .body("size()", is(0));
-    }
-
-    @Test
-    @DisplayName("3단계: 예약 생성/삭제 테스트")
-    void 삼단계() {
-        Map<String, String> params = new HashMap<>();
-        params.put("name", "브라운");
-        params.put("date", "2023-08-05");
-        params.put("time", "15:40");
-
-        RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .body(params)
-                .when().post("/reservations")
-                .then().log().all()
-                .statusCode(201)
-                .header("Location", "/reservations/1")
-                .body("id", is(1));
-
-        RestAssured.given().log().all()
-                .when().get("/reservations")
-                .then().log().all()
-                .statusCode(200)
-                .body("size()", is(1));
-
-        RestAssured.given().log().all()
-                .when().delete("/reservations/1")
-                .then().log().all()
-                .statusCode(204);
-
-        RestAssured.given().log().all()
-                .when().get("/reservations")
-                .then().log().all()
-                .statusCode(200)
-                .body("size()", is(0));
-    }
-*/
 
     @Test
     @DisplayName("4단계: 예외 처리 테스트")
@@ -105,7 +59,8 @@ public class MissionStepTest {
                 .then().log().all()
                 .statusCode(204);
     }
-    @Autowired
+
+  @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Test
@@ -163,6 +118,4 @@ public class MissionStepTest {
         Integer countAfterDelete = jdbcTemplate.queryForObject("SELECT count(1) from reservation", Integer.class);
         assertThat(countAfterDelete).isEqualTo(0);
     }
-
-
 }
