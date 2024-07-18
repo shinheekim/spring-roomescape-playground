@@ -15,7 +15,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundReservationException.class)
     public ResponseEntity<String> handleNotFoundReservationException(NotFoundReservationException e) {
-        return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        ErrorCode errorCode = e.getErrorCode();
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(errorCode.getMessage());
     }
 
     // 유효성 검사 실패 예외를 처리하는 핸들러
