@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import roomescape.dto.TimeResDto;
+import roomescape.domain.Time;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -18,13 +18,13 @@ public class TimeDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final RowMapper<TimeResDto> timeRowMapper = (resultSet, rowNum) ->
-            new TimeResDto(
+    private final RowMapper<Time> timeRowMapper = (resultSet, rowNum) ->
+            new Time(
                     resultSet.getLong("id"),
                     resultSet.getString("time")
             );
 
-    public TimeResDto createTime(String time) {
+    public Time createTime(String time) {
         String sql = "INSERT INTO time (time) VALUES (?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -35,15 +35,15 @@ public class TimeDao {
         }, keyHolder);
 
         Long id = keyHolder.getKey().longValue();
-        return new TimeResDto(id, time);
+        return new Time(id, time);
     }
 
-    public List<TimeResDto> findAllTimes() {
+    public List<Time> findAllTimes() {
         String sql = "SELECT id, time FROM time";
         return jdbcTemplate.query(sql, timeRowMapper);
     }
 
-    public TimeResDto findById(Long id) {
+    public Time findById(Long id) {
         String sql = "SELECT id, time FROM time WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, timeRowMapper, id);
     }

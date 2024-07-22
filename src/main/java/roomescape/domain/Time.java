@@ -1,10 +1,10 @@
-package roomescape.dto;
+package roomescape.domain;
 
-public class TimeResDto {
+public class Time {
     private Long id;
     private String time;
 
-    public TimeResDto(Long id, String time) {
+    public Time(Long id, String time) {
         this.id = id;
         this.time = time;
     }

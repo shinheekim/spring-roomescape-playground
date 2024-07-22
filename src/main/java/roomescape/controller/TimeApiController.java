@@ -22,31 +22,25 @@ public class TimeApiController {
 
     @PostMapping
     public ResponseEntity<TimeResDto> createTime(@Valid @RequestBody TimeReqDto reqDto) {
-/*        TimeResDto resDto = timeService.createTime(reqDto);
+        TimeResDto resDto = timeService.createTime(reqDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .header(HttpHeaders.LOCATION, "/times/" + resDto.getId())
-                .body(resDto);*/
-        try {
-            TimeResDto resDto = timeService.createTime(reqDto);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .header(HttpHeaders.LOCATION, "/times/" + resDto.getId())
-                    .body(resDto);
-        } catch (Exception e) {
-            // 로깅 추가
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+                .body(resDto);
     }
 
     @GetMapping
     public ResponseEntity<List<TimeResDto>> getAllTimes() {
         List<TimeResDto> times = timeService.findAllTimes();
-        return ResponseEntity.ok(times);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .body(times);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTime(@PathVariable Long id) {
         timeService.deleteTime(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .build();
     }
 }

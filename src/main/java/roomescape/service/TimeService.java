@@ -2,11 +2,13 @@ package roomescape.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import roomescape.domain.Time;
 import roomescape.dto.TimeReqDto;
 import roomescape.dto.TimeResDto;
 import roomescape.dao.TimeDao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -18,11 +20,14 @@ public class TimeService {
     }
 
     public TimeResDto createTime(TimeReqDto reqDto) {
-        return timeDao.createTime(reqDto.getTime());
+        Time time = timeDao.createTime(reqDto.getTime());
+        return new TimeResDto(time.getId(), time.getTime());
     }
 
     public List<TimeResDto> findAllTimes() {
-        return timeDao.findAllTimes();
+        return timeDao.findAllTimes().stream()
+                .map(time -> new TimeResDto(time.getId(), time.getTime()))
+                .collect(Collectors.toList());
     }
 
     public void deleteTime(Long id) {
@@ -30,6 +35,7 @@ public class TimeService {
     }
 
     public TimeResDto findById(Long id) {
-        return timeDao.findById(id);
+        Time time = timeDao.findById(id);
+        return new TimeResDto(time.getId(), time.getTime());
     }
 }

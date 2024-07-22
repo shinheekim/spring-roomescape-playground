@@ -2,7 +2,9 @@ package roomescape.service;
 
 import org.springframework.stereotype.Service;
 import roomescape.dao.ReservationDao;
+import roomescape.dao.TimeDao;
 import roomescape.domain.Reservation;
+import roomescape.domain.Time;
 import roomescape.dto.ReservationListResDto;
 import roomescape.dto.ReservationReqDto;
 import roomescape.exception.ErrorCode;
@@ -13,12 +15,14 @@ import java.util.List;
 @Service
 public class ReservationService {
     private final ReservationDao reservationDao;
+    private final TimeDao timeDao;
 
-    public ReservationService(ReservationDao reservationDao) {
+    public ReservationService(ReservationDao reservationDao, TimeDao timeDao) {
         this.reservationDao = reservationDao;
+        this.timeDao = timeDao;
     }
 
-    public List<ReservationListResDto> findAllReservations(){
+    public List<ReservationListResDto> findAllReservations() {
         List<Reservation> reservations = reservationDao.findAll();
         return reservations.stream()
                 .map(ReservationListResDto::from)
@@ -26,9 +30,10 @@ public class ReservationService {
     }
 
     public Reservation createReservation(ReservationReqDto reservationReqDto) {
-        Reservation reservation = new Reservation(null, reservationReqDto.name(), reservationReqDto.date(), reservationReqDto.time());
+        Time time = timeDao.findById(reservationReqDto.timeId());
+        Reservation reservation = new Reservation(null, reservationReqDto.name(), reservationReqDto.date(), time);
         Long id = reservationDao.insertWithKeyHolder(reservation);
-        return new Reservation(id, reservationReqDto.name(), reservationReqDto.date(), reservationReqDto.time());
+        return new Reservation(id, reservationReqDto.name(), reservationReqDto.date(), time);
     }
 
     public void deleteReservation(Long id) {
@@ -38,5 +43,4 @@ public class ReservationService {
         }
         throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND);
     }
-
 }
