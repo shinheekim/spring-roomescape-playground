@@ -1,6 +1,5 @@
 package roomescape.service;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import roomescape.dao.ReservationDao;
 import roomescape.domain.Reservation;
@@ -10,7 +9,6 @@ import roomescape.exception.ErrorCode;
 import roomescape.exception.NotFoundReservationException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {

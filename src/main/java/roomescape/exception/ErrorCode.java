@@ -22,8 +22,4 @@ public enum ErrorCode {
         this.httpStatus = httpStatus;
         this.message = message;
     }
-
-    public int getHttpStatusCode() {
-        return httpStatus.value();
-    }
 }
