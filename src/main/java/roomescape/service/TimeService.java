@@ -20,7 +20,7 @@ public class TimeService {
     }
 
     public TimeResDto createTime(TimeReqDto reqDto) {
-        Time time = timeDao.createTime(reqDto.getTime());
+        Time time = timeDao.createTime(reqDto.time());
         return new TimeResDto(time.getId(), time.getTime());
     }
 

@@ -24,7 +24,7 @@ public class TimeApiController {
     public ResponseEntity<TimeResDto> createTime(@Valid @RequestBody TimeReqDto reqDto) {
         TimeResDto resDto = timeService.createTime(reqDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, "/times/" + resDto.getId())
+                .header(HttpHeaders.LOCATION, "/times/" + resDto.id())
                 .body(resDto);
     }
 
