@@ -56,7 +56,7 @@ public class ReservationDao {
         jdbcTemplate.update(sql, id);
     }
 
-    public Long insertWithKeyHolder(Reservation reservation) {
+    public Reservation insertWithKeyHolder(Reservation reservation) {
         String sql = "INSERT INTO reservation (name, date, time_id) VALUES (?, ?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -68,6 +68,8 @@ public class ReservationDao {
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().longValue();
+        Long id = keyHolder.getKey().longValue();
+
+        return new Reservation(id, reservation.getName(), reservation.getDate(), reservation.getTime());
     }
 }

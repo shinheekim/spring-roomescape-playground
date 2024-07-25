@@ -34,8 +34,7 @@ public class ReservationService {
     public Reservation createReservation(ReservationReqDto reservationReqDto) {
         Time time = timeDao.findById(reservationReqDto.timeId());
         Reservation reservation = new Reservation(null, reservationReqDto.name(), reservationReqDto.date(), time);
-        Long id = reservationDao.insertWithKeyHolder(reservation);
-        return new Reservation(id, reservationReqDto.name(), reservationReqDto.date(), time);
+        return reservationDao.insertWithKeyHolder(reservation);
     }
 
     public void deleteReservation(Long id) {
