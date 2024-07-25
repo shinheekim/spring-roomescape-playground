@@ -31,7 +31,7 @@ public class TimeService {
     }
 
     public void deleteTime(Long id) {
-        timeDao.deleteTime(id);
+        timeDao.deleteId(id);
     }
 
     public TimeResDto findById(Long id) {
