@@ -23,7 +23,7 @@ public class TimeService {
         Time time = timeDao.createTime(reqDto.time());
         return new TimeResDto(time.getId(), time.getTime());
     }
-
+    @Transactional(readOnly = true)
     public List<TimeResDto> findAllTimes() {
         return timeDao.findAllTimes().stream()
                 .map(time -> new TimeResDto(time.getId(), time.getTime()))
@@ -34,8 +34,8 @@ public class TimeService {
         timeDao.deleteId(id);
     }
 
-    public TimeResDto findById(Long id) {
+/*    public TimeResDto findById(Long id) {
         Time time = timeDao.findById(id);
         return new TimeResDto(time.getId(), time.getTime());
-    }
+    }*/
 }
