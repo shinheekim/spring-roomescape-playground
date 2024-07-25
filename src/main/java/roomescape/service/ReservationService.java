@@ -39,7 +39,7 @@ public class ReservationService {
     public void deleteReservation(Long id) {
         Reservation reservation = reservationDao.findById(id);
         if (reservation != null) {
-            reservationDao.delete(id);
+            reservationDao.deleteId(id);
         }
         throw new NotFoundReservationException(ErrorCode.RESERVATION_NOT_FOUND);
     }
