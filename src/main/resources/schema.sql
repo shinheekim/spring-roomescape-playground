@@ -20,6 +20,3 @@ CREATE TABLE reservation
     PRIMARY KEY (id),
     FOREIGN KEY (time_id) REFERENCES time(id)
 );
--- AUTO_INCREMENT 값 초기화
-ALTER TABLE time AUTO_INCREMENT = 1;
-ALTER TABLE reservation AUTO_INCREMENT = 1;
